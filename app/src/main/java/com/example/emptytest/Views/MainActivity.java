@@ -174,8 +174,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onListItemClick(View view, int position, long id) {
         TextView infosView = view.findViewById(R.id.infos_textview);
-        if(infosView.getVisibility() == View.GONE) infosView.setVisibility(View.VISIBLE);
-        else infosView.setVisibility(View.GONE);
+        //infosView.setVisibility(infosView.isShown() ? View.GONE : View.VISIBLE);
+        if (infosView.isShown()){
+            //Fx.slide_up(this,infosView);
+            infosView.setVisibility(View.GONE);
+        }else{
+            infosView.setVisibility(View.VISIBLE);
+            Fx.slide_down(this,infosView);
+        }
     }
 
     public void onEditItemClick(int position){
