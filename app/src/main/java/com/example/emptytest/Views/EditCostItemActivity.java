@@ -64,8 +64,6 @@ public class EditCostItemActivity extends AppCompatActivity {
             try {
                 costItem = dbHandler.getById(uid);
             } catch (Exception e) {
-                Log.d("ERROR", e.getMessage());
-                Log.d("ERROR", "CostItem with id " + uid + " could not be loaded.");
                 finish();
             }
             subjectTextBox.setText(costItem.getSubject());
@@ -147,7 +145,6 @@ public class EditCostItemActivity extends AppCompatActivity {
         //intent.putExtra("MESSAGE",message);
         //setResult(2,intent);
         setResult(dbChanged ? changedResultCode : unchangedResultCode);
-        Log.d("Tag", "Finishing with changed mode = " + dbChanged);
         if (dbChanged) Toast.makeText(this, getResources().getString(R.string.disclaimer_saved_changes), Toast.LENGTH_SHORT).show();
         finish();
     }

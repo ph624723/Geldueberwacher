@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             arrayAdapter = new CostItemArrayAdapter(costItems,this);
             listView.setAdapter(arrayAdapter);
         }catch(Exception e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             Log.d("ERROR", e.getMessage());
         }
 
@@ -225,12 +224,10 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Tag", "Received activity finished with codes: " + requestCode+","+resultCode);
 
         if(requestCode==EditCostItemActivity.editRequestCode || requestCode==EditCostItemActivity.createRequestCode)
         {
             if (resultCode == EditCostItemActivity.changedResultCode){
-                Log.d("Tag", "Refreshing data");
                 refreshData();
             }
         }
