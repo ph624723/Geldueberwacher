@@ -4,9 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +19,7 @@ import com.example.emptytest.R;
 import com.example.emptytest.datamanagement.Categories;
 import com.example.emptytest.datamanagement.CostItem;
 import com.example.emptytest.datamanagement.DatabaseHandler;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class EditCostItemActivity extends AppCompatActivity {
@@ -45,6 +38,7 @@ public class EditCostItemActivity extends AppCompatActivity {
     EditText subjectTextBox;
     EditText valueTextBox;
     CalendarView calendarView;
+    EditText infosTextBox;
     TextView categoryTextView;
     Button confirmButton;
 
@@ -61,6 +55,7 @@ public class EditCostItemActivity extends AppCompatActivity {
         subjectTextBox = findViewById(R.id.subjectTextBox);
         valueTextBox = findViewById(R.id.valueTextBox);
         calendarView = findViewById(R.id.calendarView);
+        infosTextBox = findViewById(R.id.infoTextBox);
         categoryTextView = findViewById(R.id.categoryTextView);
         confirmButton = findViewById(R.id.confirmItemButton2);
 
@@ -75,10 +70,11 @@ public class EditCostItemActivity extends AppCompatActivity {
             }
             subjectTextBox.setText(costItem.getSubject());
             valueTextBox.setText((costItem.getValue()+"").replace("+",""));
+            infosTextBox.setText(costItem.getInfos());
             editMode = editRequestCode;
         } else {
             int catId = extras.getInt(categoryKey);
-            costItem = new CostItem("default", 0.0, Categories.getCategory(catId));
+            costItem = new CostItem("default", 0.0, Categories.getCategory(catId), "");
             editMode = createRequestCode;
             confirmButton.setEnabled(false);
             confirmButton.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
@@ -94,7 +90,6 @@ public class EditCostItemActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 costItem.setDate(new GregorianCalendar(year, month, dayOfMonth).getTime());
-                Log.d("DATE", costItem.dateString());
             }
         });
 
@@ -127,6 +122,7 @@ public class EditCostItemActivity extends AppCompatActivity {
     public void onConfirmClick(View view) {
         costItem.setSubject(subjectTextBox.getText().toString());
         costItem.setValue(Double.parseDouble(valueTextBox.getText().toString()));
+        costItem.setInfos(infosTextBox.getText().toString());
 
         if (editMode == editRequestCode) {
             try {

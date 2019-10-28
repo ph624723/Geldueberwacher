@@ -156,21 +156,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent,EditCostItemActivity.createRequestCode);
     }
 
-    public void addData(int num){
-        ListView listView = findViewById(R.id.listView);
-        int datacount = listView.getCount() +1 ;
-
-        for (int i=0; i<num;i++){
-            Date d = new Date();
-            d.setYear((int)(Math.random()*20+100));
-            d.setMonth((int)(Math.random()*12+1));
-            d.setDate((int)(Math.random()*28+1));
-            CostItem item = new CostItem((datacount++) + ". Item", Math.random()*500-250, Categories.NECESSARY, d);
-            dbHandler.insertCostItem(item);
-            refreshData();
-        }
-    }
-
     public void refreshData(){
         new Handler().post(new Runnable() {
             @Override

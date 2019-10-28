@@ -21,20 +21,22 @@ public class CostItem {
     private double value;
     private Date date = Calendar.getInstance().getTime();
     private Categories.Category category;
+    private String infos;
 
-    public CostItem (String subject, double value, Categories.Category category){
+    public CostItem (String subject, double value, Categories.Category category, String infos){
         this.subject = subject;
         this.value = value;
         this.category = category;
+        this.infos = infos;
     }
 
-    public CostItem (String subject, double value, Categories.Category category, Date date){
-        this(subject,value, category);
+    public CostItem (String subject, double value, Categories.Category category, String infos, Date date){
+        this(subject,value, category, infos);
         if(date != null) this.date = date;
     }
 
-    public CostItem (int uid, String subject, double value, Categories.Category category, Date date){
-        this(subject,value, category, date);
+    public CostItem (int uid, String subject, double value, Categories.Category category, String infos, Date date){
+        this(subject,value, category, infos, date);
         this.uid = uid;
     }
 
@@ -88,5 +90,17 @@ public class CostItem {
 
     public void setCategory (Categories.Category category){
         this.category = category;
+    }
+
+    public void setInfos(String infos){
+        this.infos = infos;
+    }
+
+    public String getInfos (){
+        return infos;
+    }
+
+    public String infosString(){
+        return infos;
     }
 }

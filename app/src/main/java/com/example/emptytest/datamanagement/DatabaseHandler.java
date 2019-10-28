@@ -27,7 +27,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+CostItems_TABLE_NAME;
         */
 
-    private static final String CREATE_TABLE_COSTITEMS = "Create Table EmpInfo(ID Integer Primary Key AutoIncrement, ItemSubject Text, ItemValue Double, ItemDate Int8, ItemCategory Integer)";
+    private static final String CREATE_TABLE_COSTITEMS = "Create Table EmpInfo(ID Integer Primary Key AutoIncrement, ItemSubject Text, ItemValue Double, ItemDate Int8, ItemCategory Integer, ItemInfos Text)";
 
     private static DatabaseHandler mInstance = null;
     public static DatabaseHandler getmInstance(Context context){
@@ -57,6 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         contentValues.put("ItemValue", item.getValue());
         contentValues.put("ItemDate", item.getDate().getTime());
         contentValues.put("ItemCategory", item.getCategory().getId());
+        contentValues.put("ItemInfos",item.getInfos());
         Log.d("DEBUG SAVE", item.getDate().getTime()+" "+item.getDate());
         return contentValues;
     }
@@ -70,21 +71,21 @@ public class DatabaseHandler extends SQLiteOpenHelper
 
     public Cursor getItemList(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "Select ID, ItemSubject, ItemValue, ItemDate, ItemCategory from EmpInfo";
+        String query = "Select ID, ItemSubject, ItemValue, ItemDate, ItemCategory, ItemInfos from EmpInfo";
         Cursor cursor = db.rawQuery(query,null);
         return cursor;
     }
 
     public Cursor getItemListByID(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "Select ID, ItemSubject, ItemValue, ItemDate, ItemCategory from EmpInfo Where ID Like "+id;
+        String query = "Select ID, ItemSubject, ItemValue, ItemDate, ItemCategory, ItemInfos from EmpInfo Where ID Like "+id;
         Cursor cursor = db.rawQuery(query,null);
         return cursor;
     }
 
     public Cursor getItemListByCategory(int catId){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "Select ID, ItemSubject, ItemValue, ItemDate, ItemCategory from EmpInfo Where ItemCategory Like "+catId;
+        String query = "Select ID, ItemSubject, ItemValue, ItemDate, ItemCategory, ItemInfos from EmpInfo Where ItemCategory Like "+catId;
         Cursor cursor = db.rawQuery(query,null);
         return cursor;
     }
@@ -102,7 +103,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         return delete(item.getUid());
     }
 
-    public int update(CostItem item)throws Exception{
+    public int update(CostItem item){
             SQLiteDatabase db = this.getWritableDatabase();
             String[] whereArgs ={item.getUid()+""};
             int count = db.update("EmpInfo", makeContentValues(item), "ID = ?", whereArgs);
@@ -134,20 +135,14 @@ public class DatabaseHandler extends SQLiteOpenHelper
                 int uid = cursor.getInt(cursor.getColumnIndex("ID"));
                 String subject = cursor.getString(cursor.getColumnIndex("ItemSubject"));
                 Double value = cursor.getDouble(cursor.getColumnIndex("ItemValue"));
-                Date date;
-                try {
-                    long dateLong = 0;
-                    dateLong= cursor.getLong(cursor.getColumnIndex("ItemDate"));
 
-                    Log.d("DEBUG LOAD", dateLong+" "+new Date(dateLong));
-                    date = new Date(dateLong);
-                    //date = simpleDateFormat.parse(cursor.getString(cursor.getColumnIndex("ItemDate")));
-                }catch (Exception e){
-                    date = null;
-                }
+                long dateLong = dateLong= cursor.getLong(cursor.getColumnIndex("ItemDate"));
+                Date date = new Date(dateLong);
+
                 Categories.Category category = Categories.getCategory(cursor.getInt(cursor.getColumnIndex("ItemCategory")));
+                String infos = cursor.getString(cursor.getColumnIndex("ItemInfos"));
 
-                items.add(new CostItem(uid,subject,value, category,date));
+                items.add(new CostItem(uid,subject,value, category, infos, date));
             }
         }catch(Exception e){
             throw new Exception(e.getMessage());
