@@ -11,7 +11,9 @@
     <string name="demotext_value">+35</string>
     <string name="demotext_date">01.01.2000</string>
     <string name="demotext_category">Kategorie</string>
+    <string name="demotext_info">Zusätzliche Informationen \nGroßer Spaß \nund ein Kanu</string>
     <string name="hint_subject">Betreff</string>
     <string name="hint_value">0.0</string>
+    <string name="hint_info">Zusätzliche Informationen</string>
     <string name="euroDescription">euro</string>
 </resources>

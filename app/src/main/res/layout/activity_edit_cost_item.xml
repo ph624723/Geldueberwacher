@@ -145,11 +145,26 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <EditText
+                android:id="@+id/infoTextBox"
+                android:inputType="textMultiLine"
+                android:lines="6"
+                android:minLines="1"
+                android:gravity="top|start"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:scrollbars="vertical"
+                android:layout_marginHorizontal="60dp"
+                android:layout_marginVertical="10dp"
+                android:hint="@string/hint_info"
+                android:autofillHints=""/>
+
             <CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp" />
+
 
         </LinearLayout>
     </ScrollView>
