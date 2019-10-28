@@ -6,6 +6,7 @@
     <string name="cat_key_fun">Freizeit</string>
     <string name="disclaimer_saved_changes">Änderungen gespeichert</string>
     <string name="disclaimer_deleted">Eintrag gelöscht</string>
+    <string name="disclaimer_no_infos">Keine Notizen</string>
     <string name="button_save">Speichern</string>
     <string name="demotext_subject">Betreff</string>
     <string name="demotext_value">+35</string>

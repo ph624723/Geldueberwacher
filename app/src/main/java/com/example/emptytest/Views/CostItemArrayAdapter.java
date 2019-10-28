@@ -22,6 +22,7 @@ public class CostItemArrayAdapter extends ArrayAdapter<CostItem> implements View
             TextView txtSubject;
             TextView txtValue;
             TextView txtDate;
+            TextView txtInfos;
         }
 
         public CostItemArrayAdapter(ArrayList<CostItem> data, Context context) {
@@ -61,6 +62,7 @@ public class CostItemArrayAdapter extends ArrayAdapter<CostItem> implements View
                 viewHolder.txtSubject = (TextView) convertView.findViewById(R.id.betreff_textview);
                 viewHolder.txtValue = (TextView) convertView.findViewById(R.id.betrag_textview);
                 viewHolder.txtDate = (TextView) convertView.findViewById(R.id.date_textview);
+                viewHolder.txtInfos = (TextView) convertView.findViewById(R.id.infos_textview);
 
                 result=convertView;
 
@@ -77,6 +79,7 @@ public class CostItemArrayAdapter extends ArrayAdapter<CostItem> implements View
             viewHolder.txtSubject.setText(costItem.subjectString());
             viewHolder.txtValue.setText(costItem.valueString());
             viewHolder.txtDate.setText(costItem.dateString());
+            viewHolder.txtInfos.setText(costItem.infosString().equals("") ? mContext.getResources().getString(R.string.disclaimer_no_infos) : costItem.infosString());
 
             //viewHolder.info.setOnClickListener(this);
             //viewHolder.info.setTag(position);

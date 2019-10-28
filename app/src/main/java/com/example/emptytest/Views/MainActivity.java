@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -172,7 +173,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onListItemClick(View view, int position, long id) {
-
+        TextView infosView = view.findViewById(R.id.infos_textview);
+        if(infosView.getVisibility() == View.GONE) infosView.setVisibility(View.VISIBLE);
+        else infosView.setVisibility(View.GONE);
     }
 
     public void onEditItemClick(int position){
