@@ -21,4 +21,12 @@
     <string name="deleteDialog_explanation">Der Eintrag wird entgültig von diesem Gerät entfernt</string>
     <string name="deleteDialog_confirm">Löschen</string>
     <string name="deleteDialog_abort">Abbrechen</string>
+
+    <string-array name="date_ranges">
+        <item>Alle</item>
+        <item>Dieser Monat</item>
+        <item>Diese Woche</item>
+        <item>Letzer Monat</item>
+        <item>Letzte Woche</item>
+    </string-array>
 </resources>

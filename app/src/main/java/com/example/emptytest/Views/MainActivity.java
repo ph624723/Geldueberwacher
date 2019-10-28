@@ -14,7 +14,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.example.emptytest.datamanagement.Categories;
 import com.example.emptytest.datamanagement.CostItem;
 import com.example.emptytest.datamanagement.DatabaseHandler;
 import com.example.emptytest.Generic.SortableList;
+import com.example.emptytest.datamanagement.Timespans;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Date;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private CostItemArrayAdapter arrayAdapter;
     private SortableList<CostItem> costItems = new SortableList<>(CostItem.DateComparator);
     private Categories.Category selectedCategory;
+    private Timespans.Timespan selectedTimespan;
 
     ViewPager viewPager;
 
@@ -83,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         }catch(Exception e){
             Log.d("ERROR", e.getMessage());
         }
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -147,6 +150,42 @@ public class MainActivity extends AppCompatActivity {
 
         // set creator
         listView.setMenuCreator(creator);
+
+        Spinner date_range_spinner = findViewById(R.id.timespan_spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.date_ranges));
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        date_range_spinner.setAdapter(dataAdapter);
+        date_range_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        selectedTimespan = Timespans.ALL_TIME;
+                        break;
+                    case 1:
+                        selectedTimespan = Timespans.THIS_MONTH;
+                        break;
+                    case 2:
+                        selectedTimespan = Timespans.THIS_WEEK;
+                        break;
+                    case 3:
+                        selectedTimespan = Timespans.LAST_MONTH;
+                        break;
+                    case 4:
+                        selectedTimespan = Timespans.LAST_WEEK;
+                        break;
+                }
+                refreshData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                parent.setSelection(0);
+            }
+        });
+
+        selectedTimespan = Timespans.ALL_TIME;
+
         refreshData();
     }
 
