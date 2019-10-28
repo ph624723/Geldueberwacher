@@ -13,4 +13,5 @@
     <string name="demotext_category">Kategorie</string>
     <string name="hint_subject">Betreff</string>
     <string name="hint_value">0.0</string>
+    <string name="euroDescription">euro</string>
 </resources>
