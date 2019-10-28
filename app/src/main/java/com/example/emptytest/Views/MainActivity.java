@@ -30,6 +30,7 @@ import com.example.emptytest.datamanagement.Categories;
 import com.example.emptytest.datamanagement.CostItem;
 import com.example.emptytest.datamanagement.DatabaseHandler;
 import com.example.emptytest.Generic.SortableList;
+import com.example.emptytest.datamanagement.Times;
 import com.example.emptytest.datamanagement.Timespans;
 import com.google.android.material.tabs.TabLayout;
 
@@ -201,11 +202,17 @@ public class MainActivity extends AppCompatActivity {
             public void run(){
                 costItems.removeAll(costItems);
                 try{
-                    costItems.addAll(dbHandler.getData(selectedCategory));
+                    costItems.addAll(dbHandler.getData(selectedCategory, selectedTimespan));
                 }catch(Exception e){
                     //Some Exception handling pls
                 }
                 arrayAdapter.notifyDataSetChanged();
+                TextView sumView = findViewById(R.id.summary_value_textview);
+                double summaryValue = 0;
+                for (CostItem item : costItems){
+                    summaryValue += item.getValue();
+                }
+                sumView.setText(CostItem.decimalFormat.format(summaryValue));
             }
         });
     }

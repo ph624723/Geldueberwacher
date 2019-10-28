@@ -58,7 +58,6 @@ public class DatabaseHandler extends SQLiteOpenHelper
         contentValues.put("ItemDate", item.getDate().getTime());
         contentValues.put("ItemCategory", item.getCategory().getId());
         contentValues.put("ItemInfos",item.getInfos());
-        Log.d("DEBUG SAVE", item.getDate().getTime()+" "+item.getDate());
         return contentValues;
     }
 
@@ -83,9 +82,15 @@ public class DatabaseHandler extends SQLiteOpenHelper
         return cursor;
     }
 
-    public Cursor getItemListByCategory(int catId){
+    public Cursor getItemListByCategoryAndDate(int catId, Long startDate, Long endDate){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "Select ID, ItemSubject, ItemValue, ItemDate, ItemCategory, ItemInfos from EmpInfo Where ItemCategory Like "+catId;
+        if(startDate != null){
+            query += " And ItemDate >= "+startDate;
+        }
+        if(endDate != null){
+            query += " And ItemDate <= "+endDate;
+        }
         Cursor cursor = db.rawQuery(query,null);
         return cursor;
     }
@@ -119,9 +124,31 @@ public class DatabaseHandler extends SQLiteOpenHelper
         return loadDataSet(cursor);
     }
 
-    public SortableList<CostItem> getData(Categories.Category category) throws Exception
+    public SortableList<CostItem> getData(Categories.Category category, Timespans.Timespan timespan) throws Exception
     {
-        Cursor cursor = getItemListByCategory(category.getId());
+        Long startDate;
+        Long endDate;
+        Times t = Times.getTimesInstance();
+        if (timespan.equals(Timespans.ALL_TIME)){
+            startDate = null;
+            endDate = null;
+        }else if(timespan.equals(Timespans.LAST_MONTH)){
+            startDate = t.getStartOfMonth(-1);
+            endDate = t.getEndOfMonth(-1);
+        }else if(timespan.equals(Timespans.THIS_MONTH)){
+            startDate = t.getStartOfMonth(0);
+            endDate = t.getEndOfMonth(0);
+        }else if(timespan.equals(Timespans.LAST_WEEK)){
+            startDate = t.getStartOfWeek(-1);
+            endDate = t.getEndOfWeek(-1);
+        }else if(timespan.equals(Timespans.THIS_WEEK)){
+            startDate = t.getStartOfWeek(0);
+            endDate = t.getEndOfWeek(0);
+        }else{
+            throw new Exception("Wrong timespan given");
+        }
+
+        Cursor cursor = getItemListByCategoryAndDate(category.getId(), startDate, endDate);
         return loadDataSet(cursor);
     }
 
