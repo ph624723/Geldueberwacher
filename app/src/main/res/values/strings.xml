@@ -16,4 +16,8 @@
     <string name="hint_value">0.0</string>
     <string name="hint_info">Zusätzliche Informationen</string>
     <string name="euroDescription">euro</string>
+    <string name="deleteDialog_titleQuestion">Eintrag wirklich löschen?</string>
+    <string name="deleteDialog_explanation">Der Eintrag wird entgültig von diesem Gerät entfernt</string>
+    <string name="deleteDialog_confirm">Löschen</string>
+    <string name="deleteDialog_abort">Abbrechen</string>
 </resources>

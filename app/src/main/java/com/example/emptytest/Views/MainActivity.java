@@ -1,9 +1,11 @@
 package com.example.emptytest.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -22,7 +23,6 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.emptytest.R;
 import com.example.emptytest.Test.EmpListAdapter;
-import com.example.emptytest.Views.main.SectionsPagerAdapter;
 import com.example.emptytest.datamanagement.Categories;
 import com.example.emptytest.datamanagement.CostItem;
 import com.example.emptytest.datamanagement.DatabaseHandler;
@@ -198,6 +198,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onDeleteItemClick(int position){
+        final int pos = position;
+        AlertDialog.Builder alert = new AlertDialog.Builder(
+                this);
+        alert.setTitle(getResources().getString(R.string.deleteDialog_titleQuestion));
+        alert.setMessage(getResources().getString(R.string.deleteDialog_explanation));
+        alert.setPositiveButton(getResources().getString(R.string.deleteDialog_confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                onDeleteItemConfirm(pos);
+            }
+        });
+        alert.setNegativeButton(getResources().getString(R.string.deleteDialog_abort), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
+    }
+
+    public void onDeleteItemConfirm(int position){
         String name = arrayAdapter.getItem(position).subjectString();
         int uid = arrayAdapter.getItem(position).getUid();
         dbHandler.delete(uid);
