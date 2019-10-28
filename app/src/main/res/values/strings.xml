@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Geldüberwacher</string>
+    <string name="title_activity_list_element">ListElement</string>
+    <string name="cat_key_official">Offiziell</string>
+    <string name="cat_key_necessary">Nützlich</string>
+    <string name="cat_key_fun">Freizeit</string>
+    <string name="disclaimer_saved_changes">Änderungen gespeichert</string>
+    <string name="disclaimer_deleted">Eintrag gelöscht</string>
+    <string name="button_save">Speichern</string>
+    <string name="demotext_subject">Betreff</string>
+    <string name="demotext_value">+35</string>
+    <string name="demotext_date">01.01.2000</string>
+    <string name="demotext_category">Kategorie</string>
+    <string name="hint_subject">Betreff</string>
+    <string name="hint_value">0.0</string>
+</resources>
